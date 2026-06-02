@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Destello en cada sabor</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-text-size-adjust: 100%;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .section {
+            background: white;
+            border: 4px solid #ff6b6b;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.8s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+            transition: transform 0.3s ease;
+        }
+
+        .cover-section {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            border-color: #ff6b6b;
+            text-align: center;
+        }
+
+        .cover-section h1 {
+            font-size: 2.5em;
+            color: #c44569;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .lema {
+            font-size: 1.8em;
+            color: #e15f41;
+            font-weight: bold;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .empresa {
+            font-size: 1.5em;
+            color: #c44569;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+
+        .datos {
+            text-align: left;
+            background: rgba(255, 255, 255, 0.8);
+            border: 3px solid #ffa502;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .datos p {
+            margin: 10px 0;
+            font-size: 1.1em;
+        }
+
+        .integrantes {
+            margin-top: 20px;
+        }
+
+        .integrantes h3 {
+            color: #c44569;
+            margin-bottom: 10px;
+        }
+
+        .integrantes ul {
+            list-style: none;
+            padding-left: 20px;
+        }
+
+        .integrantes li {
+            margin: 8px 0;
+            padding-left: 10px;
+            border-left: 3px solid #ff6b6b;
+        }
+
+        h2 {
+            color: #c44569;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2em;
+            border-bottom: 3px solid #ff6b6b;
+            padding-bottom: 10px;
+        }
+
+        .intro-texto {
+            font-size: 1.1em;
+            text-align: justify;
+            color: #444;
+        }
+
+        .paso {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            border: 3px solid #2ed573;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .paso:hover {
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .paso h1 {
+            color: #2f3542;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .paso p {
+            color: #444;
+            margin-bottom: 15px;
+        }
+
+        .imagen-container {
+            background: #f8f9fa;
+            border: 3px solid #ffa502;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .imagen-container:hover {
+            transform: scale(1.02);
+            border-color: #ff6b6b;
+        }
+
+        .imagen-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+        }
+
+        .conclusion-section {
+            background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%);
+            border-color: #e15f41;
+            text-align: center;
+        }
+
+        .conclusion-section p {
+            font-size: 1.3em;
+            color: #c44569;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            animation: fadeInModal 0.3s ease;
+        }
+
+        @keyframes fadeInModal {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 0;
+            border: 4px solid #ff6b6b;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 1000px;
+            display: flex;
+            animation: slideIn 0.4s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-left {
+            flex: 1;
+            padding: 20px;
+            border-right: 3px solid #ffa502;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8f9fa;
+        }
+
+        .modal-left img {
+            max-width: 100%;
+            max-height: 500px;
+            border-radius: 10px;
+            border: 2px solid #ddd;
+        }
+
+        .modal-right {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+            max-height: 600px;
+        }
+
+        .modal-right h2 {
+            color: #c44569;
+            margin-bottom: 20px;
+            text-align: left;
+            border-bottom: 2px solid #ff6b6b;
+            padding-bottom: 10px;
+        }
+
+        .modal-right p {
+            color: #444;
+            font-size: 1.1em;
+            line-height: 1.8;
+        }
+
+        .close {
+            color: #ff6b6b;
+            float: right;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            position: absolute;
+            right: 25px;
+            top: 15px;
+            z-index: 1001;
+            transition: all 0.3s ease;
+        }
+
+        .close:hover {
+            color: #c44569;
+            transform: rotate(90deg);
+        }
+
+        @media (max-width: 767px) {
+            .container {
+                padding: 15px;
+            }
+
+            .section {
+                padding: 18px;
+                margin-bottom: 20px;
+                border-width: 3px;
+                border-radius: 12px;
+            }
+
+            .cover-section h1 {
+                font-size: 1.9em;
+                margin-bottom: 12px;
+            }
+
+            .lema {
+                font-size: 1.5em;
+                margin-bottom: 15px;
+            }
+
+            .empresa {
+                font-size: 1.25em;
+                margin-bottom: 20px;
+            }
+
+            .datos {
+                padding: 15px;
+                border-width: 2px;
+                border-radius: 8px;
+            }
+
+            .datos p {
+                font-size: 1em;
+                margin: 8px 0;
+            }
+
+            .integrantes li {
+                margin: 6px 0;
+                padding-left: 8px;
+                border-left-width: 2px;
+            }
+
+            h2 {
+                font-size: 1.6em;
+                margin-bottom: 15px;
+                padding-bottom: 8px;
+                border-bottom-width: 2px;
+            }
+
+            .intro-texto {
+                font-size: 1em;
+            }
+
+            .paso {
+                padding: 15px;
+                border-width: 2px;
+                border-radius: 10px;
+                margin-bottom: 15px;
+            }
+
+            .paso h1 {
+                font-size: 1.3em;
+                margin-bottom: 12px;
+            }
+
+            .paso p {
+                font-size: 1em;
+                margin-bottom: 12px;
+            }
+
+            .imagen-container {
+                padding: 12px;
+                border-width: 2px;
+                border-radius: 8px;
+                min-height: 48px;
+            }
+
+            .imagen-container img {
+                border-width: 1px;
+                border-radius: 6px;
+            }
+
+            .imagen-container p {
+                font-size: 0.95em;
+                margin-top: 8px;
+            }
+
+            .conclusion-section p {
+                font-size: 1.15em;
+                margin-bottom: 15px;
+            }
+
+            .modal-content {
+                flex-direction: column;
+                width: 95%;
+                margin: 3% auto;
+                border-width: 3px;
+                border-radius: 12px;
+            }
+
+            .modal-left {
+                border-right: none;
+                border-bottom: 2px solid #ffa502;
+                padding: 15px;
+            }
+
+            .modal-left img {
+                max-height: 350px;
+                border-width: 1px;
+                border-radius: 8px;
+            }
+
+            .modal-right {
+                max-height: 380px;
+                padding: 20px;
+            }
+
+            .modal-right h2 {
+                font-size: 1.4em;
+                margin-bottom: 15px;
+                padding-bottom: 8px;
+                border-bottom-width: 2px;
+            }
+
+            .modal-right p {
+                font-size: 1em;
+                line-height: 1.7;
+            }
+
+            .close {
+                font-size: 38px;
+                right: 18px;
+                top: 12px;
+                min-width: 48px;
+                min-height: 48px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .btn-volver {
+                min-width: 48px;
+                min-height: 48px;
+                padding: 14px 28px;
+                font-size: 1.05em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 12px;
+            }
+
+            .section {
+                padding: 15px;
+                margin-bottom: 16px;
+                border-radius: 10px;
+            }
+
+            .cover-section h1 {
+                font-size: 1.6em;
+                margin-bottom: 10px;
+            }
+
+            .lema {
+                font-size: 1.3em;
+                margin-bottom: 12px;
+            }
+
+            .empresa {
+                font-size: 1.1em;
+                margin-bottom: 16px;
+            }
+
+            .datos {
+                padding: 12px;
+                margin-top: 15px;
+            }
+
+            .datos p {
+                font-size: 0.95em;
+                margin: 7px 0;
+            }
+
+            .integrantes {
+                margin-top: 15px;
+            }
+
+            .integrantes h3 {
+                font-size: 1.1em;
+                margin-bottom: 8px;
+            }
+
+            .integrantes ul {
+                padding-left: 15px;
+            }
+
+            .integrantes li {
+                margin: 5px 0;
+                padding-left: 7px;
+                font-size: 0.95em;
+            }
+
+            h2 {
+                font-size: 1.45em;
+                margin-bottom: 12px;
+                padding-bottom: 7px;
+            }
+
+            .intro-texto {
+                font-size: 0.95em;
+            }
+
+            .intro-texto br {
+                display: none;
+            }
+
+            .intro-texto p {
+                margin-bottom: 12px;
+            }
+
+            .paso {
+                padding: 12px;
+                border-radius: 8px;
+                margin-bottom: 12px;
+            }
+
+            .paso h1 {
+                font-size: 1.15em;
+                margin-bottom: 10px;
+            }
+
+            .paso p {
+                font-size: 0.95em;
+                margin-bottom: 10px;
+            }
+
+            .imagen-container {
+                padding: 10px;
+                border-radius: 7px;
+            }
+
+            .imagen-container p {
+                font-size: 0.9em;
+                margin-top: 6px;
+            }
+
+            .conclusion-section p {
+                font-size: 1.05em;
+                margin-bottom: 12px;
+            }
+
+            .modal-content {
+                width: 98%;
+                margin: 2% auto;
+                border-radius: 10px;
+            }
+
+            .modal-left {
+                padding: 12px;
+            }
+
+            .modal-left img {
+                max-height: 280px;
+                border-radius: 6px;
+            }
+
+            .modal-right {
+                max-height: 320px;
+                padding: 15px;
+            }
+
+            .modal-right h2 {
+                font-size: 1.25em;
+                margin-bottom: 12px;
+                padding-bottom: 7px;
+            }
+
+            .modal-right p {
+                font-size: 0.95em;
+                line-height: 1.6;
+            }
+
+            .close {
+                font-size: 35px;
+                right: 12px;
+                top: 10px;
+            }
+
+            .btn-volver {
+                padding: 12px 24px;
+                font-size: 1em;
+            }
+        }
+
+        @media (hover: none) and (pointer: coarse) {
+            .section:hover,
+            .paso:hover,
+            .imagen-container:hover,
+            .btn-volver:hover,
+            .close:hover {
+                transform: none;
+            }
+
+            .section:active,
+            .paso:active,
+            .imagen-container:active,
+            .btn-volver:active {
+                transform: scale(0.98);
+                transition: transform 0.15s ease;
+            }
+
+            .imagen-container:active {
+                border-color: #ff6b6b;
+            }
+
+            .btn-volver:active {
+                box-shadow: 0 2px 8px rgba(255, 107, 107, 0.3);
+            }
+
+            .close:active {
+                color: #c44569;
+            }
+        }
+
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            .section {
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            }
+
+            .paso:hover {
+                box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+            }
+        }
+
+        .btn-volver {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ffa502 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .anuncio-section {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            border-color: #f39c12;
+        }
+
+        .anuncio-container {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .anuncio-imagen {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .anuncio-texto {
+            flex: 1;
+            color: #2c3e50;
+            font-size: 1.1em;
+            text-align: justify;
+        }
+
+        .conclusion-imagenes {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .conclusion-imagenes .imagen-container {
+            cursor: default;
+        }
+
+        .conclusion-imagenes .imagen-container:hover {
+            transform: none;
+            border-color: #ffa502;
+        }
+
+        @media (max-width: 767px) {
+            .anuncio-container {
+                flex-direction: column;
+            }
+
+            .conclusion-imagenes {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .btn-volver:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <section class="section cover-section">
+            <h1>Página web 201</h1>
+            <p class="lema">DESTELLO EN CADA SABOR</p>
+            <p class="empresa">Destello en cada sabor</p>
+            
+            <div class="datos">
+                <p><strong>Escuela:</strong> Cobaem cemsad 22 enthavi</p>
+                <p><strong>Grado:</strong> 1er año</p>
+                <p><strong>Grupo:</strong> 201</p>
+                <p><strong>Semestre:</strong> 2do semestre</p>
+                <p><strong>Materias:</strong> Cultura digital, conservación de la materia [...] </p>
+                <p><strong>Parcial:</strong> 2do parcial</p>
+                <!-- <p><strong>Maestro:</strong> [Nombre completo del maestro a cargo]</p> -->
+                
+                <div class="integrantes">
+                    <h3>Integrantes del equipo:</h3>
+                    <ul>
+                        <li>Daniela Flores Bermúdez</li>
+                        <li>Yuli Estefany González de la Cruz</li>
+                        <li>Estrella Bermúdez Barron</li>
+                        <li>Mayte Citlali de Jesús alcantara</li>
+                        <li>Ana Paola Castillo Ramírez</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Introducción</h2>
+            <div class="intro-texto">
+                <p>Bienvenidos a nuestro proyecto escolar. En este sitio web, deseamos compartir con ustedes todo el proceso que hemos seguido para desarrollar nuestro producto "Destello en cada sabor".</p>
+                <br>
+                <p>Nuestro proyecto se centra en la elaboración de un producto gastronómico que fusiona sabores únicos y creativos. Hemos trabajado en conjunto como equipo, adquiriendo un profundo conocimiento sobre la importancia de la colaboración, la higiene en la preparación de alimentos y el proceso de convertir una idea en un producto tangible y exquisito.</p>
+                <br>
+                <p>A lo largo de esta página, podrán observar cada etapa que seguimos, desde la selección de ingredientes hasta el producto final terminado. Esperamos que disfruten apreciando nuestro trabajo tanto como nosotros disfrutamos realizándolo.</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Preparación</h2>
+            
+            <div class="paso">
+                <h1>Paso 1: Preparar la base</h1>
+                <p>En un recipiente limpio, se vierte la avena, que constituye el ingrediente principal y servirá como base para la incorporación de los demás productos posteriormente.</p>
+                <div class="imagen-container" onclick="abrirModal(1)">
+                    <img src="Imagenes/1.jpg" alt="Ingredientes frescos">
+                    <p style="margin-top: 10px; color: #666;">Haz clic para ver más detalles</p>
+                </div>
+            </div>
+
+            <div class="paso">
+                <h1>Paso 2: Agregar el Chocolate</h1>
+                <p>Después de añadir la avena, se incorpora el chocolate para comenzar a mezclar y combinar los ingredientes.</p>
+                <div class="imagen-container" onclick="abrirModal(2)">
+                    <img src="Imagenes/2.jpg" alt="Mezclando ingredientes">
+                    <p style="margin-top: 10px; color: #666;">Haz clic para ver más detalles</p>
+                </div>
+            </div>
+
+            <div class="paso">
+                <h1>Paso 3: Agregar los aditamentos</h1>
+                <p>Vertemos sobre la base de avena y chocolate una porción de mermelada y cajeta con el fin de aportar un sabor dulce adicional.</p>
+                <div class="imagen-container" onclick="abrirModal(3)">
+                    <img src="Imagenes/3.jpg" alt="Preparación de la base">
+                    <p style="margin-top: 10px; color: #666;">Haz clic para ver más detalles</p>
+                </div>
+            </div>
+
+            <div class="paso">
+                <h1>Paso 4: Mezclamos todo</h1>
+                <p>Una vez que contemos con todos los ingredientes en el recipiente, procederemos a mezclarlos y revolverlos en el recipiente correspondiente para formar la masa.</p>
+                <div class="imagen-container" onclick="abrirModal(4)">
+                    <img src="Imagenes/4.jpg" alt="Decoración">
+                    <p style="margin-top: 10px; color: #666;">Haz clic para ver más detalles</p>
+                </div>
+            </div>
+
+            <div class="paso">
+                <h1>Paso 5: Moldear el producto</h1>
+                <p>Vertemos la mezcla que teníamos en otro molde y empezamos a darle forma</p>
+                <div class="imagen-container" onclick="abrirModal(5)">
+                    <img src="Imagenes/5.jpg" alt="Moldear el producto">
+                    <p style="margin-top: 10px; color: #666;">Haz clic para ver más detalles</p>
+                </div>
+            </div>
+
+            <div class="paso">
+                <h1>Paso 6: Cobertura</h1>
+                <p>Se añade chocolate sobre la avena moldeada para mejorar su sabor.</p>
+                <div class="imagen-container" onclick="abrirModal(6)">
+                    <img src="Imagenes/6.jpg" alt="Cobertura de chocolate">
+                    <p style="margin-top: 10px; color: #666;">Haz clic para ver más detalles</p>
+                </div>
+            </div>
+
+            <div class="paso">
+                <h1>Paso 7: Creación del molde de chocolate</h1>
+                <p>En un rectángulo recubierto de aluminio, se vierte chocolate para formar la base inicial.</p>
+                <div class="imagen-container" onclick="abrirModal(7)">
+                    <img src="Imagenes/7.Chocolate.jpg" alt="Molde de chocolate">
+                    <p style="margin-top: 10px; color: #666;">Haz clic para ver más detalles</p>
+                </div>
+            </div>
+
+            <div class="paso">
+                <h1>Paso 8: Agregar Mermelada</h1>
+                <p>Se incorpora mermelada a la base de chocolate que se preparó previamente.</p>
+                <div class="imagen-container" onclick="abrirModal(8)">
+                    <img src="Imagenes/8..jpg" alt="Agregar mermelada">
+                    <p style="margin-top: 10px; color: #666;">Haz clic para ver más detalles</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section anuncio-section">
+            <h2>Anuncio</h2>
+            <div class="anuncio-container">
+                <div class="anuncio-imagen">
+                    <div class="imagen-container" src="Imagenes/Chocolate.png">
+                        <img src="Imagenes/Chocolate.png" alt="Anuncio del producto">
+                    </div>
+                </div>
+                <div class="anuncio-texto">
+                    <p>Descubra el sabor inigualable de nuestros chocolates artesanales. Elaborados con ingredientes selectos y totalmente naturales, combinamos la suavidad de la pasta de cacao de origen con matices únicos de frutas, frutos secos o especias, complementados con un toque especial de sabores tradicionales y exóticos. Son ideales para disfrutar en cualquier momento del día, ya sea como un bocado refinado o un dulce capricho para compartir. Cada pieza es creada con esmero, precisión y dedicación por nuestro equipo de maestros chocolateros.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section anuncio-section">
+            <h2>Anuncio</h2>
+            <div class="anuncio-container">
+                <div class="anuncio-imagen">
+                    <div class="imagen-container" src="Imagenes/Chocolate.png">
+                        <img src="Imagenes/Barra de chocolate.png" alt="Anuncio del producto">
+                    </div>
+                </div>
+                <div class="anuncio-texto">
+                    <p>Le invitamos a degustar nuestras barras artesanales de chocolate, cuya exquisitez sin duda le cautivará. Elaboradas con ingredientes frescos y naturales, combinan la textura crujiente de la avena con el delicioso sabor del chocolate, realzadas con un toque especial de mermelada y cajeta. Constituyen la opción ideal para disfrutar en cualquier momento del día, ya sea como un snack nutritivo o un dulce capricho. Cada barra es elaborada con esmero y dedicación por nuestro equipo.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section conclusion-section">
+            <h2>Conclusión</h2>
+            <p>Y así quedaría nuestro producto, ya solo para empaquetar y empezar a vender</p>
+            <div class="conclusion-imagenes">
+                <div class="imagen-container">
+                    <img src="Imagenes/Barras finalizado.jpg" alt="Barras finalizadas">
+                </div>
+                <div class="imagen-container">
+                    <img src="Imagenes/Barras Envoltorio.jpg" alt="Barras en envoltorio">
+                </div>
+                <div class="imagen-container">
+                    <img src="Imagenes/Chocolate Finalizado.jpg" alt="Chocolate finalizado">
+                </div>
+                <div class="imagen-container">
+                    <img src="Imagenes/Chocolate Envoltorio.jpg" alt="Chocolate en envoltorio">
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div id="modal" class="modal">
+        <span class="close" onclick="cerrarModal()">&times;</span>
+        <div class="modal-content">
+            <div class="modal-left" id="modal-imagen">
+            </div>
+            <div class="modal-right">
+                <h2 id="modal-titulo"></h2>
+                <p id="modal-texto"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const pasos = [
+            {
+                titulo: "Paso 1: Preparar la base",
+                texto: "En un recipiente limpio, se vierte la avena, que constituye el ingrediente principal y servirá como base para la incorporación de los demás productos posteriormente.",
+                imagen: "Imagenes/1.jpg"
+            },
+            {
+                titulo: "Paso 2: Agregar el Chocolate",
+                texto: "Después de añadir la avena, se incorpora el chocolate para comenzar a mezclar y combinar los ingredientes.",
+                imagen: "Imagenes/2.jpg"
+            },
+            {
+                titulo: "Paso 3: Agregar los aditamentos",
+                texto: "Vertemos sobre la base de avena y chocolate una porción de mermelada y cajeta con el fin de aportar un sabor dulce adicional.",
+                imagen: "Imagenes/3.jpg"
+            },
+            {
+                titulo: "Paso 4: Mezclamos todo",
+                texto: "Una vez que contemos con todos los ingredientes en el recipiente, procederemos a mezclarlos y revolverlos en el recipiente correspondiente para formar la masa.",
+                imagen: "Imagenes/4.jpg"
+            },
+            {
+                titulo: "Paso 5: Moldear el producto",
+                texto: "Vertemos la mezcla que teníamos en otro molde y empezamos a darle forma",
+                imagen: "Imagenes/5.jpg"
+            },
+            {
+                titulo: "Paso 6: Cobertura",
+                texto: "Se añade chocolate sobre la avena moldeada para mejorar su sabor.",
+                imagen: "Imagenes/6.jpg"
+            },
+            {
+                titulo: "Paso 7: Creación del molde de chocolate",
+                texto: "En un rectángulo recubierto de aluminio, se vierte chocolate para formar la base inicial.",
+                imagen: "Imagenes/7.Chocolate.jpg"
+            },
+            {
+                titulo: "Paso 8: Agregar Mermelada",
+                texto: "Se incorpora mermelada a la base de chocolate que se preparó previamente.",
+                imagen: "Imagenes/8..jpg"
+            }
+        ];
+
+        let touchStartY = 0;
+        let touchEndY = 0;
+
+        function abrirModal(numeroPaso) {
+            const paso = pasos[numeroPaso - 1];
+            document.getElementById('modal-titulo').textContent = paso.titulo;
+            document.getElementById('modal-texto').textContent = paso.texto;
+            document.getElementById('modal-imagen').innerHTML = '<img src="' + paso.imagen + '" alt="' + paso.titulo + '">';
+            document.getElementById('modal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function cerrarModal() {
+            document.getElementById('modal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        document.getElementById('modal').addEventListener('touchstart', function(e) {
+            touchStartY = e.changedTouches[0].screenY;
+        }, { passive: true });
+
+        document.getElementById('modal').addEventListener('touchend', function(e) {
+            touchEndY = e.changedTouches[0].screenY;
+            handleSwipe();
+        }, { passive: true });
+
+        function handleSwipe() {
+            const swipeDistance = touchEndY - touchStartY;
+            const minSwipeDistance = 50;
+            if (Math.abs(swipeDistance) > minSwipeDistance && swipeDistance > 0) {
+                cerrarModal();
+            }
+        }
+
+        document.getElementById('modal').addEventListener('click', function(event) {
+            if (event.target === this) {
+                cerrarModal();
+            }
+        });
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                cerrarModal();
+            }
+        });
+    </script>
+</body>
+</html>
