@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kofu.Lab LITE</title>
+    <style>
+        /* Estilos hiper-básicos enfocados al rendimiento móvil */
+        body {
+            background: #fff;
+            color: #000;
+            font-family: sans-serif;
+            padding: 12px;
+            margin: 0;
+        }
+        header, section {
+            margin-bottom: 16px;
+            border-bottom: 2px solid #000;
+            padding-bottom: 12px;
+        }
+        h1, h2 { margin: 0 0 4px 0; font-size: 1.4rem; }
+        p { margin: 0 0 8px 0; font-size: 0.95rem; }
+        ul { padding-left: 20px; margin: 8px 0; }
+        li { margin-bottom: 6px; font-size: 0.95rem; }
+        
+        /* Inputs grandes optimizados para dedos en pantallas táctiles */
+        select, textarea, button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 4px;
+            margin-bottom: 12px;
+            font-size: 1rem;
+            border: 2px solid #000;
+            background: #fff;
+            color: #000;
+            box-sizing: border-box;
+        }
+        button {
+            background: #000;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Kofu.Lab (Modo Texto Rápido)</h1>
+        <p>Asistencia académica urgente de última hora.</p>
+    </header>
+
+    <section>
+        <h2>Precios Base:</h2>
+        <ul>
+            <li><strong>Mate/Cónicas:</strong> $60 MXN</li>
+            <li><strong>Proyectos:</strong> $200 MXN</li>
+            <li><strong>Formateo/Código:</strong> $150 MXN</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Enviar Pedido por WhatsApp:</h2>
+        <form onsubmit="sendForm(event)">
+            <label for="mat">1. Elige Materia:</label>
+            <select id="mat" required>
+                <option value="Matemáticas">Matemáticas ($60)</option>
+                <option value="Proyecto Transversal">Proyecto Transversal ($200)</option>
+                <option value="Código/Formateo">Código o Formateo ($150)</option>
+                <option value="Otro">Otro (Cotizar)</option>
+            </select>
+
+            <label for="det">2. ¿Qué debe llevar la tarea?:</label>
+            <textarea id="det" rows="3" placeholder="Instrucciones del profesor..." required></textarea>
+
+            <button type="submit">SOLICITAR AHORA</button>
+        </form>
+    </section>
+
+    <script>
+        function sendForm(e) {
+            e.preventDefault();
+            var num = "5210000000000"; // Pon tu número aquí
+            var m = document.getElementById('mat').value;
+            var d = document.getElementById('det').value;
+            var txt = "Kofu.Lab LITE:\n- Materia: " + m + "\n- Detalles: " + d;
+            window.location.href = "https://wa.me/" + num + "?text=" + encodeURIComponent(txt);
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Portafolio | Presentación Animada</title>
+    <style>
+        /* --- COLORES (Morados y Negros) --- */
+        :root {
+            --fondo-oscuro: #0a090d;
+            --tarjeta-bg: #14121a;
+            --morado-claro: #9b5de5;
+            --morado-oscuro: #5a189a;
+            --texto-blanco: #ffffff;
+            --texto-gris: #a09cb0;
+        }
+
+        /* --- ESTILOS GENERALES Y ANIMACIÓN DE ENTRADA --- */
+        body {
+            background-color: var(--fondo-oscuro);
+            color: var(--texto-blanco);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 40px 20px;
+            overflow-x: hidden;
+            animation: entradaSuave 0.8s ease-out;
+        }
+
+        @keyframes entradaSuave {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .contenedor {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* --- ENCABEZADO --- */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 1px solid #221c2e;
+            padding-bottom: 20px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin: 0 0 10px 0;
+        }
+
+        header h1 span {
+            color: var(--morado-claro);
+        }
+
+        .presentacion {
+            font-size: 1.1rem;
+            color: var(--texto-gris);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .edad-badge {
+            display: inline-block;
+            background-color: var(--morado-oscuro);
+            border: 1px solid var(--morado-claro);
+            color: white;
+            padding: 4px 12px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            border-radius: 4px;
+            margin-top: 15px;
+            animation: pulsoGlow 2s infinite alternate;
+        }
+
+        @keyframes pulsoGlow {
+            from { box-shadow: 0 0 5px rgba(155, 93, 229, 0.4); }
+            to { box-shadow: 0 0 15px rgba(155, 93, 229, 0.8); }
+        }
+
+        /* --- INTERACCIÓN DE EMOJIS (Clase para JS) --- */
+        .emoji-animado {
+            display: inline-block;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+        }
+        .emoji-animado.salto {
+            transform: scale(1.4) rotate(15deg);
+        }
+
+        /* --- LOS 3 RECUADROS DEL INICIO (Efecto Flotante Continuo) --- */
+        .grid-inicio {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 50px;
+        }
+
+        .recuadro {
+            background-color: var(--tarjeta-bg);
+            border: 1px solid #221c2e;
+            border-top: 4px solid var(--morado-claro);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            
+            /* Animación de flotación infinita para cuando se está mirando */
+            animation: flotarEfecto 4s ease-in-out infinite;
+        }
+
+        /* Desfasamos los tiempos de animación de cada recuadro para que no floten todos rígidos al mismo tiempo */
+        .grid-inicio .recuadro:nth-child(1) { animation-delay: 0s; }
+        .grid-inicio .recuadro:nth-child(2) { animation-delay: 0.5s; }
+        .grid-inicio .recuadro:nth-child(3) { animation-delay: 1s; }
+
+        @keyframes flotarEfecto {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* En computadora, cuando el mouse pasa por encima (hover), reacciona de forma más brusca */
+        @media (min-width: 769px) {
+            .recuadro:hover {
+                transform: translateY(-12px) scale(1.03) !important;
+                border-color: var(--morado-claro);
+                box-shadow: 0 10px 20px rgba(155, 93, 229, 0.2);
+                animation-play-state: paused; /* Pausa la flotación suave al interactuar */
+            }
+        }
+
+        /* --- SECCIÓN DE EXPLICACIÓN DETALLADA --- */
+        .seccion-detalles h2 {
+            font-size: 1.5rem;
+            color: var(--morado-claro);
+            margin-bottom: 20px;
+            border-left: 4px solid var(--morado-oscuro);
+            padding-left: 10px;
+        }
+
+        .bloque-proyecto {
+            background-color: var(--tarjeta-bg);
+            border: 1px solid #221c2e;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        @media (min-width: 769px) {
+            .bloque-proyecto:hover {
+                transform: translateX(8px);
+                border-color: var(--morado-claro);
+            }
+        }
+
+        .bloque-proyecto h3 {
+            margin: 0 0 6px 0;
+            font-size: 1.4rem;
+        }
+
+        .datos-rapidos {
+            font-size: 0.85rem;
+            color: var(--texto-gris);
+            margin-bottom: 12px;
+        }
+
+        .datos-rapidos span {
+            color: var(--texto-blanco);
+            background-color: #221c38;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .bloque-proyecto p {
+            margin: 0 0 12px 0;
+            color: #e0dbec;
+        }
+
+        .nota {
+            background-color: #000000;
+            padding: 10px 14px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: var(--texto-gris);
+        }
+
+        /* --- RECUADRO PARA VENTA DE ARCHIVOS (Texto sin formatear) --- */
+        .titulo-ventas {
+            font-size: 1rem;
+            color: var(--texto-gris);
+            margin-top: 40px;
+            margin-bottom: 8px;
+        }
+
+        .recuadro-plano {
+            background-color: #000000;
+            border: 1px dashed var(--morado-oscuro);
+            padding: 16px;
+            border-radius: 6px;
+            font-family: monospace;
+            color: var(--morado-claro);
+            white-space: pre-wrap;
+            word-break: break-all;
+            font-size: 1rem;
+            transition: border-style 0.3s;
+        }
+        
+        .recuadro-plano:hover {
+            border-style: solid;
+        }
+
+        /* ========================================================
+           📱 MEDIA QUERIES: ADAPTACIÓN PARA TELÉFONOS
+           ======================================================== */
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 12px;
+            }
+
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .grid-inicio {
+                grid-template-columns: 1fr;
+                gap: 16px; /* Aumentamos el espacio para que se note el efecto flotar entre tarjetas */
+            }
+
+            .bloque-proyecto {
+                padding: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="contenedor">
+        
+        <header>
+            <h1>Mi Portafolio<span>.</span></h1>
+            <p class="presentacion">
+                ¡Hola! <span class="emoji-animado" onmouseover="animarEmoji(this)" onclick="animarEmoji(this)">👋</span> Soy un chico de 17 años y este es mi espacio provisional de presentación para destacar mis archivos y desarrollos actuales.
+            </p>
+            <span class="edad-badge">17 Años // Desarrollador</span>
+        </header>
+
+        <section class="grid-inicio">
+            <div class="recuadro">
+                <div style="font-size: 1.5rem;"><span class="emoji-animado" onmouseover="animarEmoji(this)" onclick="animarEmoji(this)">🎮</span></div>
+                <h3>55shG4M</h3>
+                <span class="categoria">Juego en C++</span>
+            </div>
+            <div class="recuadro">
+                <div style="font-size: 1.5rem;"><span class="emoji-animado" onmouseover="animarEmoji(this)" onclick="animarEmoji(this)">🤖</span></div>
+                <h3>Proyecto_Kofu</h3>
+                <span class="categoria">IA en Python</span>
+            </div>
+            <div class="recuadro">
+                <div style="font-size: 1.5rem;"><span class="emoji-animado" onmouseover="animarEmoji(this)" onclick="animarEmoji(this)">💼</span></div>
+                <h3>Archivos Digitales</h3>
+                <span class="categoria">Venta / Enlace</span>
+            </div>
+        </section>
+
+        <main class="seccion-detalles">
+            <h2>Detalles de mis Proyectos <span class="emoji-animado" onmouseover="animarEmoji(this)" onclick="animarEmoji(this)">📂</span></h2>
+
+            <div class="bloque-proyecto">
+                <h3>Repositorio: 55shG4M</h3>
+                <div class="datos-rapidos">Lenguaje principal: <span>C++</span> | Estado: <span>Código Público</span></div>
+                <p>Es un juego escrito en C++ que actualmente no tiene un nombre definitivo. El código está disponible para que cualquiera lo vea, pero toma en cuenta que por el momento no incluye documentación sobre cómo funciona internamente.</p>
+                <div class="nota">// Nota: Código libre sin instrucciones de uso en el repositorio.</div>
+            </div>
+
+            <div class="bloque-proyecto">
+                <h3>Repositorio: Proyecto_Kofu</h3>
+                <div class="datos-rapidos">Lenguaje principal: <span>Python</span> | Base: <span>Ollama (gemma4)</span></div>
+                <p>Este es un proyecto más enfocado al ámbito profesional. Se encuentra en fase de producción y desarrollo beta. Es una Inteligencia Artificial local llamada Kofu, diseñada para crear archivos directamente en tu computadora sin necesidad de conectarse a internet, usando el motor de Ollama.</p>
+            </div>
+
+            <section>
+                <div class="titulo-ventas">También me dedico a vender archivos digitales, puedes verlos aquí <span class="emoji-animado" onmouseover="animarEmoji(this)" onclick="animarEmoji(this)">🛒</span>:</div>
+                <div class="recuadro-plano">https://github.com/shebxyd-pixel.github.io</div>
+            </section>
+        </main>
+
+    </div>
+
+    <script>
+        // Función sencilla para hacer reaccionar los emojis al pasar el mouse o tocarlos
+        function animarEmoji(elemento) {
+            // Añadimos la clase de animación
+            elemento.classList.add('salto');
+            
+            // Se la quitamos después de 300ms para que se pueda volver a activar
+            setTimeout(() => {
+                elemento.classList.remove('salto');
+            }, 300);
+        }
+    </script>
+
+</body>
+</html>

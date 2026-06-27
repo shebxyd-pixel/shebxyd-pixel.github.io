@@ -3,278 +3,239 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Kofu.Lab | Tareas Urgentes</title>
+    <title>Kofu.Lab | Premium</title>
     <style>
         :root {
-            --bg: #121214;
-            --surface: #1c1a22;
-            --morado: #9b5de5; /* Tono Defoko */
-            --texto: #f3f0f7;
-            --texto-mutado: #a29bfe;
-            --borde: #332a42;
+            --bg-main: #0f0e12;
+            --bg-card: #1c1a22;
+            --accent-light: #9b5de5;
+            --accent-glow: rgba(155, 93, 229, 0.4);
+            --accent-dark: #5a189a;
+            --text-main: #ffffff;
+            --text-muted: #a0a0a5;
         }
 
-        /* MODO SIMPLIFICADO (Se activa con la clase .datos-bajos en el body) */
-        body.datos-bajos {
-            --bg: #ffffff;
-            --surface: #ffffff;
-            --morado: #5a189a;
-            --texto: #000000;
-            --texto-mutado: #444444;
-            --borde: #cccccc;
-        }
-        body.datos-bajos .card, body.datos-bajos header, body.datos-bajos .urgente {
-            background: #ffffff !important;
-            box-shadow: none !important;
-            border: 1px solid var(--borde) !important;
-        }
-        body.datos-bajos .btn {
-            background-color: var(--morado) !important;
-            color: #fff !important;
-            border-radius: 4px;
-        }
-
-        /* DISEÑO BASE (Mobile First) */
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: var(--bg);
-            color: var(--texto);
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* Interruptor de Modo de Datos */
-        .data-saver-container {
-            background: var(--surface);
-            text-align: center;
-            padding: 0.5rem;
-            border-bottom: 1px solid var(--borde);
-            font-size: 0.85rem;
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            padding: 20px 16px;
+            overflow-x: hidden;
+            animation: fadeInBody 0.6s ease-out;
         }
-        .data-saver-btn {
-            background: none;
-            border: 1px solid var(--morado);
-            color: var(--morado);
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-weight: bold;
-            cursor: pointer;
+
+        @keyframes fadeInBody {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         header {
-            background: linear-gradient(180deg, var(--surface) 0%, var(--bg) 100%);
-            padding: 2rem 1rem;
             text-align: center;
-            border-bottom: 2px solid var(--morado);
+            margin-bottom: 28px;
+            position: relative;
         }
 
-        h1 {
-            margin: 0;
-            font-size: 2.2rem;
-            font-weight: 800;
-        }
-        h1 span { color: var(--morado); }
-
-        .subtitulo {
-            color: var(--texto-mutado);
-            font-size: 1rem;
-            margin-top: 0.3rem;
-            font-weight: 600;
+        header h1 {
+            font-size: 2.4rem;
+            color: #ffffff;
+            text-shadow: 0 0 10px var(--accent-glow), 0 0 20px var(--accent-glow);
+            animation: pulseGlow 2s infinite alternate;
         }
 
-        main {
-            padding: 1rem;
-            max-width: 500px; /* Tamaño ideal para lectura en celular */
-            margin: 0 auto;
+        @keyframes pulseGlow {
+            from { text-shadow: 0 0 8px var(--accent-glow); }
+            to { text-shadow: 0 0 18px var(--accent-light); }
         }
 
-        .intro {
+        header p {
             font-size: 0.95rem;
-            text-align: center;
-            margin-bottom: 1.5rem;
-            color: var(--texto-mutado);
+            color: var(--text-muted);
+            margin-top: 6px;
         }
 
-        .grid {
+        /* Enlace rápido a versión ligera */
+        .lite-link {
+            display: block;
+            text-align: center;
+            color: var(--accent-light);
+            text-decoration: none;
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .services-grid {
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            gap: 16px;
+            margin-bottom: 32px;
         }
 
         .card {
-            background-color: var(--surface);
-            border: 1px solid var(--borde);
+            background: linear-gradient(145deg, #1c1a22, #141218);
+            border-left: 5px solid var(--accent-light);
+            padding: 20px;
             border-radius: 12px;
-            padding: 1.2rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:active {
+            transform: scale(0.97);
+            box-shadow: 0 4px 10px var(--accent-glow);
         }
 
         .card h3 {
-            margin: 0 0 0.5rem 0;
-            font-size: 1.2rem;
+            font-size: 1.25rem;
+            margin-bottom: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .card p {
-            margin: 0;
             font-size: 0.9rem;
-            color: var(--texto-mutado);
+            color: var(--text-muted);
         }
 
         .price {
-            color: var(--morado);
-            font-weight: bold;
-            font-size: 1.2rem;
-            margin-top: 0.8rem;
-            display: block;
-        }
-
-        /* Formulario ultra ligero para enviar datos con señal baja */
-        .urgente {
-            background: var(--surface);
-            border-top: 3px solid var(--morado);
-            padding: 1.5rem 1.2rem;
-            margin-top: 2rem;
-            border-radius: 12px;
-        }
-
-        .urgente h2 {
-            margin: 0 0 0.5rem 0;
             font-size: 1.3rem;
-            text-align: center;
-        }
-
-        .form-group {
-            margin-bottom: 1rem;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 0.85rem;
-            margin-bottom: 0.3rem;
-            color: var(--texto-mutado);
-        }
-
-        .form-group input, .form-group textarea {
-            width: 100%;
-            padding: 0.7rem;
-            background: var(--bg);
-            border: 1px solid var(--borde);
-            color: var(--texto);
-            border-radius: 6px;
-            box-sizing: border-box;
-            font-size: 0.95rem;
-        }
-
-        .btn {
-            display: block;
-            width: 100%;
-            background-color: var(--morado);
+            font-weight: 800;
             color: #ffffff;
-            padding: 0.9rem;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: bold;
-            text-align: center;
-            border: none;
-            font-size: 1rem;
-            box-sizing: border-box;
-            cursor: pointer;
+            background: var(--accent-dark);
+            padding: 4px 10px;
+            border-radius: 20px;
+            border: 1px solid var(--accent-light);
+            display: inline-block;
+            margin-top: 12px;
         }
 
-        footer {
+        .form-section {
+            background-color: var(--bg-card);
+            padding: 24px 20px;
+            border-radius: 16px;
+            border: 1px solid rgba(155, 93, 229, 0.15);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+        }
+
+        .form-section h2 {
+            font-size: 1.4rem;
+            margin-bottom: 18px;
             text-align: center;
-            padding: 2rem 1rem;
-            font-size: 0.8rem;
-            color: var(--texto-mutado);
+        }
+
+        .form-group { margin-bottom: 18px; }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--accent-light);
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 14px;
+            background-color: #121116;
+            border: 2px solid #2d2936;
+            color: #fff;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--accent-light);
+            background-color: #16141c;
+        }
+
+        .btn-submit {
+            background: linear-gradient(90deg, var(--accent-dark), var(--accent-light));
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 16px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px var(--accent-glow);
+            transition: transform 0.1s;
+        }
+
+        .btn-submit:active {
+            transform: scale(0.95);
         }
     </style>
 </head>
 <body>
 
-    <!-- Barra superior para alternar señal/ahorro de datos -->
-    <div class="data-saver-container">
-        ¿Señal escolar débil? 
-        <button class="data-saver-btn" id="btnDatos" onclick="toggleDatos()">Activar Modo Texto</button>
-    </div>
-
     <header>
-        <h1>Kofu<span>.Lab</span></h1>
-        <div class="subtitulo">Tareas y Proyectos Escolares Urgentes</div>
+        <h1>Kofu.Lab</h1>
+        <p>⚡ Tareas Listas en Tiempo Récord ⚡</p>
     </header>
 
-    <main>
-        <p class="intro">¿Te ganó el tiempo? Resolvemos tus entregas rápido, con total orden y confidencialidad.</p>
+    <a href="lite.html" class="lite-link">¿Poca señal? Entra aquí (Versión Texto Rápido)</a>
 
-        <div class="grid">
-            <div class="card">
-                <h3>Matemáticas y Cónicas</h3>
-                <p>Resolución de problemas, elipses, parábolas y cálculo con gráficas limpias paso a paso.</p>
-                <span class="price">Desde $60 MXN</span>
-            </div>
-
-            <div class="card">
-                <h3>Proyectos Transversales</h3>
-                <p>Investigación estructurada, redacción y armado completo alineado a tu rúbrica.</p>
-                <span class="price">Desde $200 MXN</span>
-            </div>
-
-            <div class="card">
-                <h3>Formateo y Código</h3>
-                <p>Scripts escolares en Python/C++ y maquetación de archivos o diapositivas urgentes.</p>
-                <span class="price">Desde $150 MXN</span>
-            </div>
+    <main class="services-grid">
+        <div class="card">
+            <h3>📐 Mate & Cónicas</h3>
+            <p>Procedimientos claros, fórmulas bien estructuradas y gráficas limpias.</p>
+            <span class="price">$60</span>
         </div>
-
-        <!-- Formulario simplificado para enviar los criterios rápido -->
-        <section class="urgente">
-            <h2>⚡ Envío de Tarea Urgente</h2>
-            <p class="intro" style="font-size:0.85rem;">Completa los datos esenciales para cotizar de inmediato:</p>
-            
-            <form onsubmit="enviarMensaje(event)">
-                <div class="form-group">
-                    <label for="materia">Materia / Proyecto:</label>
-                    <input type="text" id="materia" placeholder="Ej. Geometría Analítica" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="detalles">¿Qué hay que hacer? (Criterios del profe):</label>
-                    <textarea id="detalles" rows="4" placeholder="Ej. Resolver 3 parábolas para mañana a las 7am..." required></textarea>
-                </div>
-
-                <button type="submit" class="btn">Enviar Cotización Directa</button>
-            </form>
-        </section>
+        <div class="card">
+            <h3>📂 Proyectos Transversales</h3>
+            <p>Unión de materias, redacción coherente y formato listo para rúbrica.</p>
+            <span class="price">$200</span>
+        </div>
+        <div class="card">
+            <h3>💻 Formateo & Código</h3>
+            <p>Arreglos urgentes en Word (APA), depuración de scripts o diagramas rápidos.</p>
+            <span class="price">$150</span>
+        </div>
     </main>
 
-    <footer>
-        <p>&copy; 2026 Kofu.Lab. Soporte rápido para salvar el semestre.</p>
-    </footer>
+    <section class="form-section">
+        <h2>🚀 Cotización Exprés</h2>
+        <form onsubmit="sendOrder(event)">
+            <div class="form-group">
+                <label>¿Qué necesitas?</label>
+                <select id="materia" required>
+                    <option value="" disabled selected>Selecciona una opción...</option>
+                    <option value="Matemáticas / Cónicas">Matemáticas / Cónicas ($60)</option>
+                    <option value="Proyecto Transversal">Proyecto Transversal ($200)</option>
+                    <option value="Formateo / Código">Formateo / Código ($150)</option>
+                    <option value="Otro Servicio Urgente">Otro (Cotización urgente)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Instrucciones / Caprichos del Profe</label>
+                <textarea id="criterios" rows="4" placeholder="Ej: Quiere el paso a paso en hoja blanca con firma..." required></textarea>
+            </div>
+            <button type="submit" class="btn-submit">Enviar a WhatsApp 💬</button>
+        </form>
+    </section>
 
     <script>
-        // Función interactiva para cambiar al modo de datos bajos instantáneamente sin recargar
-        function toggleDatos() {
-            const body = document.body;
-            const btn = document.getElementById('btnDatos');
-            body.classList.toggle('datos-bajos');
-            
-            if(body.classList.contains('datos-bajos')) {
-                btn.innerText = "Modo Normal (Color)";
-            } else {
-                btn.innerText = "Activar Modo Texto";
-            }
-        }
-
-        // Convierte el formulario en un mensaje directo listo para WhatsApp o Telegram
-        function enviarMensaje(e) {
-            e.preventDefault();
-            const materia = document.getElementById('materia').value;
-            const detalles = document.getElementById('detalles').value;
-            
-            const textoMensaje = `¡Hola! Necesito cotizar una tarea urgente en Kofu.Lab.%0A%0A*Materia:* ${materia}%0A*Detalles:* ${detalles}`;
-            
-            // Reemplaza el '#' por tu enlace de WhatsApp real (ej. https://wa.me/tuNumero?text=...)
-            window.location.href = `https://wa.me/#?text=${textoMensaje}`;
+        function sendOrder(event) {
+            event.preventDefault();
+            const phoneNumber = "5210000000000"; // Reemplaza por tu número
+            const mat = document.getElementById('materia').value;
+            const crit = document.getElementById('criterios').value;
+            const msg = `¡Kofu.Lab! Urgente:\n📚 *Materia:* ${mat}\n📝 *Detalles:* ${crit}`;
+            window.location.href = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(msg)}`;
         }
     </script>
 </body>
