@@ -64,10 +64,16 @@
         <form onsubmit="sendForm(event)">
             <label for="mat">1. Elige Materia:</label>
             <select id="mat" required>
-                <option value="Matemáticas">Matemáticas ($60)</option>
-                <option value="Proyecto Transversal">Proyecto Transversal ($200)</option>
-                <option value="Código/Formateo">Código o Formateo ($150)</option>
-                <option value="Otro">Otro (Cotizar)</option>
+                <option value="Word">Word</option>
+                <option value="Excel">Excel</option>
+                <option value="PowerPoint">PowerPoint</option>
+                <option value="Publisher">Triptico</option>
+                <option value="Infografia Canva">Infografia Canva (impreso)</option>
+                <option value="Infografia">Infografia Digital</option>
+                <option value="Photoshop">Infografia Photoshop</option>
+                <option value="Proyecto Transversal">Proyecto Transversal</option>
+                <option value="Pagina web">Pagina web</option>
+                <option value="Otro">Otro tipo de trabajo</option>
             </select>
 
             <label for="det">2. ¿Qué debe llevar la tarea?:</label>
@@ -76,11 +82,11 @@
             <button type="submit">SOLICITAR AHORA</button>
         </form>
     </section>
-
+}
     <script>
         function sendForm(e) {
             e.preventDefault();
-            var num = "5210000000000"; // Pon tu número aquí
+            var num = "+5215631043801";
             var m = document.getElementById('mat').value;
             var d = document.getElementById('det').value;
             var txt = "Kofu.Lab LITE:\n- Materia: " + m + "\n- Detalles: " + d;
